@@ -13,11 +13,14 @@ import java.util.Optional;
 @RequestMapping("/api/aluno")
 public class AlunoController {
     @Autowired
-    AlunoService service;
+    private AlunoService service;
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping
     public boolean insereAluno(@RequestBody Aluno aluno) {
+        if (aluno.getCpf() == null)
+            return false;
+
         return this.service.insereAluno(aluno);
     }
 
@@ -48,11 +51,17 @@ public class AlunoController {
 
     @PutMapping(path = "/{matricula}")
     public Aluno atualizaAluno(@RequestBody Aluno aluno) {
+        if (buscaAluno(aluno.getMatricula()) == null)
+            return null;
+
         return this.service.atualizaAluno(aluno);
     }
 
     @DeleteMapping(path = "/{matricula}")
     public boolean deletaAluno(@PathVariable Long matricula) {
+        if (buscaAluno(matricula) == null)
+            return false;
+
         return this.service.deletaAluno(matricula);
     }
 }

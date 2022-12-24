@@ -19,7 +19,7 @@ public class Aluno {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDate dataNascimento;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String cpf;
 
     @Column(name = "valor_mensalidade", nullable = false)
